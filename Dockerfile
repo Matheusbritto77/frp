@@ -1,11 +1,11 @@
 # Stage 1: Build Web Dashboard Frontend
 FROM node:22-alpine AS web-builder
 
-COPY web/package.json /web/package.json
-COPY web/shared/ /web/shared/
-COPY web/frps/ /web/frps/
 WORKDIR /web
-RUN npm install
+COPY web/package*.json ./
+COPY web/shared/ ./shared/
+COPY web/frps/ ./frps/
+RUN npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 WORKDIR /web/frps
 RUN npm run build
 
